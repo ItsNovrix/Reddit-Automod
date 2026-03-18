@@ -1,0 +1,22 @@
+# ----------------------------------------------------------------#
+#             COMMENT ON ALL POSTS (KEYWORD MATCH)                #
+# ----------------------------------------------------------------#
+
+#  Rule Name: Comment on all posts (keyword match)
+#  Created By: ItsNovrix
+#  Created On: 6/1/23
+#  Description: Automatically comment on a post when specific keywords are deteced
+---
+    type: submission
+    title+body: [apple, orange, banana, strawberry]
+    comment_stickied: true
+    comment: |
+
+       Your submission appears to reference fruits. This comment has no real point honestly, this is just some sample text! 
+
+       Add whatever you want here!
+
+       Have a great day!
+
+       — The r/SubNameHere Mod Team
+---
