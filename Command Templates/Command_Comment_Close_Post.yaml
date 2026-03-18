@@ -1,0 +1,23 @@
+# ----------------------------------------------------------------#
+#                      CLOSE POST COMMAND                         #
+# ----------------------------------------------------------------#
+
+#  Rule Name: Close Post Command
+#  Created By: ItsNovrix
+#  Created On: 3/15/26
+#  Description: Lock comments on post when Close Post command is used
+---
+    type: comment 
+    author: 
+        is_moderator: true
+    body (regex, includes): ["!close","!closed"]
+    parent_submission: 
+        set_locked: true
+    comment_stickied: true
+    comment_locked: true
+    comment: | 
+    
+       This post has now been closed!
+
+       — The r/SubNameHere Mod Team
+---
