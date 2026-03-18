@@ -13,7 +13,7 @@
     body (regex, includes): ["!hello","!hi","!hey"]
     comment: | 
     
-      Hey there! You triggered a comment using the !Hello command.
+       Hey there! You triggered a comment using the !Hello command.
        
        The command keyword and this comment can be customized as needed. You can even customize the command symbol!
 
