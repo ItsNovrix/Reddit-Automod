@@ -1,0 +1,22 @@
+# ----------------------------------------------------------------#
+#                 COMMENT ON ALL POSTS (LOCKED)                   #
+# ----------------------------------------------------------------#
+
+#  Rule Name: Comment on all posts (locked)
+#  Created By: ItsNovrix
+#  Created On: 3/15/26
+#  Description: Automatically adds a locked comment of your chosing to all posts submitted to your subreddit
+---
+type: submission
+comment_stickied: true
+comment_locked: true
+comment: |
+
+    This is an automatic locked comment! AutoModerator will automatically comment whatever you put here on every post submitted to your subreddit. 
+
+    Simply edit the text here as necessary, then add it to your Automod code! 
+
+    You can use the same Reddit markdown code for posting/commenting here, such as **bold**, *italics*, or even adding links (like the one below)! 
+
+    [Add your link here!](https://www.google.com)
+---
