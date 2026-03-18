@@ -13,7 +13,6 @@
     body (regex, includes): ["!close","!closed"]
     parent_submission: 
         set_locked: true
-    comment_stickied: true
     comment_locked: true
     comment: | 
     
