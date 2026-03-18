@@ -1,0 +1,14 @@
+# ----------------------------------------------------------------#
+#                     SUBREDDIT NAME COMMENT                      #
+# ----------------------------------------------------------------#
+
+#  Rule Name: Subreddit name comment
+#  Created By: ItsNovrix
+#  Created On: 3/15/26
+#  Description: Automatically comment on posts with a clickable link to subreddit name 
+---
+    type: submission
+    title+body+url+domain(includes, regex): '/?r/\w+'
+    comment_stickied: true
+    comment: 'Subreddit link: {{match}}'
+---
