@@ -16,11 +16,11 @@ Similar to the above command, this command will respond to a comment made by a s
 
 ## Close_Post_Command.yaml
 
-This AutoResponse uses a predefined list of keywords to look for matches in post titles and body text, and comments on the post if the keywords match. This is useful for addressing common topics or questions in your subreddit by providing the OP with a comment containing information and/or resources about those topics.
+When triggered, this command will lock the OP's post and add a comment explaining that the post has been closed. 
 
 ## Close_Post_Update_Flair_Command.yaml
 
-Virtually identical to the previous AutoResponse, this AutoResponse uses a predefined list of keywords to look for matches in post titles and body text, and comments on the post if the keywords match. The difference here is the response comment, which is in a list format containing multiple resources to share with the OP.
+An extension of the above command, this command will lock the OP's post, add a comment explaining that the post has been closed, and will update the post flair to a flair of your choosing (if the flair has not already been set). This is useful for closing posts asking questions and updating the post flair to "Resolved" or "Answered" while maintaining the post for historical purposes. 
 
 ---
 
