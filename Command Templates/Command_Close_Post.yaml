@@ -1,0 +1,27 @@
+# ----------------------------------------------------------------#
+#                      CLOSE POST COMMAND                         #
+# ----------------------------------------------------------------#
+
+#  Rule Name: Close Post Command
+#  Created By: ItsNovrix
+#  Created On: 3/15/26
+#  Description: Automatically lock comments on posts with stolen content
+---
+    type: comment 
+    author: 
+        is_submitter: true
+    body (regex, includes): ["!close","!closed","!resolved"]
+    parent_submission: 
+        ~flair_text: "Question"
+        overwrite_flair: true
+        set_flair: 
+            text: "Resolved" 
+            template_id: 12345-abc-1a2b3c
+        set_locked: true
+    comment_stickied: true
+    comment: | 
+    
+       Thank you for marking this question as resolved! Your post has now been locked and the post flair has been updated.
+
+       — The r/SubNameHere Mod Team
+---
