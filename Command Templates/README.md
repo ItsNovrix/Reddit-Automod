@@ -2,13 +2,13 @@
 
 Commands can be an excellent tool to quickly perform specific actions on posts/comments in your subreddit. Below is a list of the various commands and how they work.
 
-> **NOTE:** All commands were coded with a ! as the prefix, but you can customize them all as necessary to use any other prefix, such as @, #, or *. 
+> **NOTE:** All commands were coded with a ! as the prefix, but you can customize them all as necessary to use any other prefix, such as the @, #, or * symbols. 
 
 --- 
 
 ## Comment_Command.yaml
 
-This command 
+This command will respond to a comment made by a subreddit moderator when the predefined command is used. 
 
 ## Comment_All_Posts_Locked_AutoResponse.yaml
 
