@@ -20,14 +20,12 @@ This AutoResponse uses a predefined list of keywords to look for matches in post
 
 Virtually identical to the previous AutoResponse, this AutoResponse uses a predefined list of keywords to look for matches in post titles and body text, and comments on the post if the keywords match. The difference here is the response comment, which is in a list format containing multiple resources to share with the OP.
 
-### Delete content created by the app
+## Subreddit_Name_AutoResponse.yaml
 
-- Use **Relay App → Delete** to **permanently delete** the app’s post/comment.
-
-  > This is irreversible, so use it carefully!
+This AutoResponse will monitor posts for an **r/** subreddit name in the post title, body, or link spots, and if a subreddit name is detected, a locked comment will be stickied on the post containing a clickable link to the subreddit.
 
 ---
 
 ## 🆘 Feedback & Support
 
-If you have any feedback/suggestions or need support, feel free to reach out to u/ItsNovrix on Reddit.
+If you have any feedback/suggestions or need support, feel free to reach out to [u/ItsNovrix](https://www.reddit.com/user/ItsNovrix/) on [Reddit](https://www.reddit.com/).
