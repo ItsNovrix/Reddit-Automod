@@ -1,4 +1,4 @@
-# ItsNovrix General Automod Templates
+# General Automod Templates
 
 Do you moderate a subreddit and need a comprehensive Automod configuration, but don't know what to do or where to start? You've come to the right place!
 
