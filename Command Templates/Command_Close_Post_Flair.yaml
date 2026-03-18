@@ -12,13 +12,12 @@
         is_submitter: true
     body (regex, includes): ["!close","!closed","!resolved"]
     parent_submission: 
-        ~flair_text: "Question"
+        ~flair_text: "Resolved"
         overwrite_flair: true
         set_flair: 
             text: "Resolved" 
             template_id: 12345-abc-1a2b3c
         set_locked: true
-    comment_stickied: true
     comment_locked: true
     comment: | 
     
