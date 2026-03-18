@@ -1,0 +1,15 @@
+# ----------------------------------------------------------------#
+#                          LINK COMMENT                           #
+# ----------------------------------------------------------------#
+
+#  Rule Name: Server invite comment
+#  Created By: ItsNovrix
+#  Created On: 3/15/26
+#  Description: Automatically comment clickable link on posts with a link attached
+---
+    type: link submission
+    comment: |
+        Clickable link:
+   
+        [{{url}}]({{url}})
+---
