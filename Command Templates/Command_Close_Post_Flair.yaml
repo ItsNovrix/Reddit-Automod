@@ -5,7 +5,7 @@
 #  Rule Name: Close Post Command
 #  Created By: ItsNovrix
 #  Created On: 3/15/26
-#  Description: Automatically lock comments on posts with stolen content
+#  Description: Lock comments on post and update post flair when Close Post command is used
 ---
     type: comment 
     author: 
