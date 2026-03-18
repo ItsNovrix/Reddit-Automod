@@ -1,12 +1,14 @@
 # Command Templates
 
-AutoResponses are a great way to get information across to your community without having to manually comment that information yourself. Below is a list of the included AutoResponses and the types of content to which they'll respond.
+Commands can be an excellent tool to quickly perform specific actions on posts/comments in your subreddit. Below is a list of the various commands and how they work.
+
+> **NOTE:** All commands were coded with a ! as the prefix, but you can customize them all as necessary to use any other prefix, such as @, #, or *. 
 
 --- 
 
-## Comment_All_Posts_AutoResponse.yaml
+## Comment_Command.yaml
 
-This AutoResponse is fairly simple. The AutoResponse will automatically comment on any and all posts submitted to your subreddit. This can be useful for sharing information such as your subreddit's Discord server, rules reminders, resources related to your subreddit topic, and more! The code includes functionality to sticky the comment by default for maximum visibility, but this can be removed as necessary.
+This command 
 
 ## Comment_All_Posts_Locked_AutoResponse.yaml
 
