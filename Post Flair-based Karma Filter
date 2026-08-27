@@ -1,0 +1,13 @@
+#  Rule Name: Karma filter
+#  Description: Automatically filter posts that do not have enough karma 
+---
+    type: submission
+    ~flair_template_id: FLAIR_ID_HERE
+    moderators_exempt: true
+    author:
+       is_contributor: false
+       combined_subreddit_karma: "< 50"
+    action: remove
+    action_reason: "Low subreddit karma"
+    priority: 5
+---
