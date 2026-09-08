@@ -1,0 +1,22 @@
+---
+    type: comment
+    parent_submission:
+       flair_template_id: [POST FLAIR ID HERE]
+    moderators_exempt: true
+    author:
+       is_submitter: false
+       is_contributor: false
+       combined_subreddit_karma: "< 50"
+    action: remove
+    action_reason: "Low sub karma | Political Comments"
+    priority: 5
+    message: |
+
+        Your comment was automatically removed because your account does not currently meet the minimum subreddit karma requirements for participating in political posts on r/SubName.
+
+        To participate in political posts on r/SubName, we require users to have a minimum of **50 combined post and comment karma in r/SubName**. These limits apply **only to political posts** and help us reduce spam, brigading, and other rule-breaking behavior that commonly occur in these posts.
+
+        You’re welcome to participate elsewhere in the subreddit while your account continues to gain subreddit karma.
+
+        — The r/SubName Mod Team
+---
