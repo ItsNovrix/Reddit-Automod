@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Automod Config Database | ItsNovrix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        /* Base Variables & Theming */
+        :root {
+            --bg: #0f1115;
+            --surface: #1a1d24;
+            --surface-hover: #242832;
+            --tx1: #f3f4f6;
+            --tx2: #9ca3af;
+            --orange: #ef4444; /* Communist red/orange vibe */
+            --orange-hover: #dc2626;
+            --line: #2d313a;
+            --radius: 8px;
+            --font-sans: 'DM Sans', sans-serif;
+            --font-serif: 'Instrument Serif', serif;
+        }
+
+        [data-theme="light"] {
+            --bg: #f9fafb;
+            --surface: #ffffff;
+            --surface-hover: #f3f4f6;
+            --tx1: #111827;
+            --tx2: #4b5563;
+            --orange: #ef4444;
+            --line: #e5e7eb;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--tx1);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(var(--bg), 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .nav-logo-mark {
+            color: var(--orange);
+            font-size: 1.5rem;
+        }
+
+        .nav-center {
+            display: none;
+            gap: 2rem;
+        }
+
+        @media(min-width: 768px) { .nav-center { display: flex; } }
+
+        .nav-item {
+            color: var(--tx2);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-item:hover, .nav-item[href="#"] {
+            color: var(--tx1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--tx1);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--surface);
+        }
+
+        .nav-btn.primary {
+            background-color: var(--orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .nav-btn.primary:hover {
+            background-color: var(--orange-hover);
+        }
+
+        /* Header Section */
+        .section { padding: 5rem 0; }
+        
+        .grid-bg {
+            background-image: linear-gradient(var(--line) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center top;
+        }
+
+        .badge-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 99px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--tx2);
+            margin-bottom: 1.5rem;
+        }
+
+        .heading {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .heading em {
+            color: var(--orange);
+            font-style: italic;
+        }
+
+        .subhead {
+            font-size: 1.125rem;
+            color: var(--tx2);
+            max-width: 600px;
+            margin-bottom: 1rem;
+        }
+
+        /* Main Content */
+        .legal-notice {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: var(--radius);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notice-label {
+            background: var(--orange);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .serif-heading { font-family: var(--font-serif); }
+
+        /* Accordions */
+        .faq-cols {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: 1fr;
+        }
+
+        @media(min-width: 768px) { .faq-cols { grid-template-columns: 1fr 1fr; } }
+
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .faq-btn {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--tx1);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .faq-chev {
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-chev {
+            transform: rotate(-180deg);
+        }
+
+        .faq-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.open .faq-body {
+            max-height: 200px;
+        }
+
+        .faq-inner {
+            padding: 0 1.5rem 1.25rem 1.5rem;
+            color: var(--tx2);
+        }
+
+        .faq-inner em { color: var(--tx1); }
+
+        /* Card & Table */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .fhead {
+            padding: 2rem;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media(min-width: 600px) {
+            .fhead { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+        }
+
+        .search-input {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            color: var(--tx1);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            font-family: inherit;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .search-input:focus {
+            outline: 2px solid var(--orange);
+            border-color: transparent;
+        }
+
+        .fbody { padding: 0; overflow-x: auto; max-height: 600px; overflow-y: auto;}
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { 
+            position: sticky; 
+            top: 0; 
+            background: var(--surface);
+            padding: 1rem 2rem; 
+            color: var(--orange); 
+            font-weight: 600; 
+            border-bottom: 1px solid var(--line);
+        }
+        td { padding: 1rem 2rem; border-bottom: 1px solid var(--line); color: var(--tx2); }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: rgba(255,255,255,0.02); color: var(--tx1); }
+
+        .sbar {
+            padding: 1.5rem 2rem;
+            background: var(--surface-hover);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-solid {
+            background: var(--tx1);
+            color: var(--bg);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: bold;
+        }
+
+/* Devvit Apps Achievement Cards */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+@media(max-width: 720px) {
+    .achievements-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media(max-width: 480px) {
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.achievement {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .25s, transform .25s ease, box-shadow .25s;
+    cursor: default;
+}
+
+.achievement::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.achievement:hover {
+    border-color: var(--orange);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.achievement:hover::before {
+    opacity: 1;
+}
+
+.ach-date {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--tx2);
+    margin-bottom: 10px;
+}
+
+.ach-num {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    color: var(--tx1);
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -.5px;
+}
+
+.ach-lbl {
+    font-size: 13px;
+    color: var(--tx2);
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.ach-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 100px;
+    border: 1px solid;
+    margin-top: 12px;
+}
+
+.ach-chip.milestone {
+    color: #f5c518;
+    border-color: rgba(245,197,24,.3);
+    background: rgba(245,197,24,.08);
+}
+
+.ach-chip.rank {
+    color: #a78bfa;
+    border-color: rgba(167,139,250,.3);
+    background: rgba(167,139,250,.08);
+}
+
+.ach-chip.launch {
+    color: #22c997;
+    border-color: rgba(34,201,151,.3);
+    background: rgba(34,201,151,.08);
+}
+
+.ach-chip.origin {
+    color: var(--orange);
+    border-color: rgba(239,68,68,.3);
+    background: rgba(239,68,68,.08);
+}
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--line);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media(min-width: 768px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr; } }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-brand em { color: var(--orange); font-style: normal; }
+        .footer-tagline { color: var(--tx2); font-size: 0.875rem; }
+        .footer-col h5 { margin-bottom: 1rem; font-size: 1rem; }
+        .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-links a { color: var(--tx2); font-size: 0.875rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--tx1); }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 1.5rem 0;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--tx2);
+        }
+
+        .footer-badges { display: flex; gap: 1rem; }
+        .footer-badge { padding: 0.25rem 0.5rem; border: 1px solid var(--line); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">☭</div>
+                ItsNovrix
+            </a>
+            <div class="nav-center">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="giveawayform.html" class="nav-item">Giveaway</a>
+                <a href="#" class="nav-item">EE Index</a>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle">☾</button>
+                <a href="https://www.reddit.com/r/NovrixApps" class="nav-btn primary">Join the Subreddit</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="section grid-bg">
+        <div class="container" style="text-align: center;">
+            <span class="badge-pill">ItsNovrix</span>
+            <h1 class="heading">Reddit <em>Automod Config</em> Database</h1>
+            <p class="subhead" style="margin-left: auto; margin-right: auto;">
+                A collection of useful Automod configurations created by ItsNovrix.
+            </p>
+            <p class="subhead" style="margin-left: auto; margin-right: auto;">
+                Simply copy and paste configurations into your subreddit's Automod!
+            </p>
+        </div>
+    </header>
+
+    <main class="section" style="padding-top: 0;">
+        <div class="container">
+            
+            <div class="legal-notice" style="margin-bottom: 4rem;">
+                <div class="notice-label">Notice</div>
+                <p>WikiScribe is currently only supports the new wiki experience. Updates are underway for new wiki support."</p>
+            </div>
+
+            <h2 class="serif-heading" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Featured Triggers</h2>
+            
+            <div class="faq-cols">
+                <div class="stagger in">
+                    <div class="faq-item">
+                        <button class="faq-btn">"Anime"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"You’ve activated the weeb protocol."</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Minecraft"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"Lava chicken."</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Donald Trump"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"*duck"</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Among Us"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"SUS. Very sus."</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"cringe"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"A cringe so strong it broke the simulation."</em></div></div>
+                    </div>
+                </div>
+
+                <div class="stagger in">
+                    <div class="faq-item">
+                        <button class="faq-btn">"Valentine"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"No bitches. Try going outside or taking a shower."</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Technoblade"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"...never dies."</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Sybau"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"Watch your tongue! I hate you, cause I'm a bad bot."</em> (Removes comment)</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Big Chungus"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"CHUNGUS LEVEL: MAXIMUM."</em></div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-btn">"Hacker"<span class="faq-chev">▼</span></button>
+                        <div class="faq-body"><div class="faq-inner">Response: <em>"I am now hacking your mainframe."</em></div></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ══════════════════════════════════
+                 DEVVIT APP ACHIEVEMENTS
+            ══════════════════════════════════ -->
+            <section style="margin-top: 5rem;">
+                <h2 class="heading" style="font-size: 2.5rem;">
+                    App Catalog
+                </h2>
+
+                <div class="achievements-grid">
+
+                    <div class="achievement">
+                        <div class="ach-num">Relay App</div>
+                        <div class="ach-lbl">A tool that lets moderators publish official moderator posts/comments in a fast and consistent manner while keeping their individual moderator accounts private!</div>
+                        <div class="ach-chip origin">View App Page</div>
+                    </div>
+
+                    <div class="achievement">
+                        <div class="ach-num">Weathercast</div>
+                        <div class="ach-lbl">A purpose-built weather app that automates a live-updating national severe weather and tropical cyclone dashboard for weather-focused subreddits.</div>
+                        <div class="ach-chip origin">View App Page</div>
+                    </div>
+
+                    <div class="achievement">
+                        <div class="ach-num">Comment Scout</div>
+                        <div class="ach-lbl">Automatically post custom comments on subreddit posts, with optional ability to filter, remove, or update posts based on configurable criteria.</div>
+                        <div class="ach-chip origin">View App Page</div>
+                    </div>
+
+                    <div class="achievement">
+                        <div class="ach-num">Dice Daemon</div>
+                        <div class="ach-lbl">A custom-made app designed specifically for the r/fearofflying subreddit. Automatically provides flight tracking links to tracking requests posts in order to help provide reassurance to anxious flyers and make tracking flights quick and easy.</div>
+                        <div class="ach-chip origin">View App Page</div>
+                    </div>
+
+                    <div class="achievement">
+                        <div class="ach-num">WikiScribe</div>
+                        <div class="ach-lbl">An app designed to help moderators maintain organized subreddit wikis by archiving important posts and comments into clean tables. A successor to the submission2wiki app.</div>
+                        <div class="ach-chip origin">View App Page</div>
+                    </div>
+
+                    <div class="achievement">
+                        <div class="ach-num">Track Buddy</div>
+                        <div class="ach-lbl">A custom-made app designed specifically for the r/fearofflying subreddit. Automatically provides flight tracking links on tracking requests posts to help provide reassurance to anxious flyers and make tracking flight easy.</div>
+                        <div class="ach-chip origin">View App Page</div>
+                    </div>
+
+                </div>
+            </section>
+            <div class="card" style="margin-top: 4rem;">
+                <div class="fhead">
+                    <div>
+                        <h2 class="serif-heading" style="font-size: 2rem; margin-bottom: 0.5rem;">Recent App Updates</h2>
+                        <p style="color: var(--tx2);">A brief overview of recent app updates.</p>
+                    </div>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search updates...">
+                </div>
+                <div class="fbody">
+                    <table id="triggerTable">
+                        <thead>
+                            <tr>
+                                <th>App Name</th>
+                                <th>Changes Made</th>
+                            </tr>
+                        </thead>
+                        <tbody id="registry-body">
+                            <!-- Injected via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="sbar">
+                    <span class="footer-copy" id="count-display">Displaying all known triggers...</span>
+                    <a href="https://royalpgytpc.github.io/MemeExchangeCommunism/" class="btn-solid btn">Visit Main Site</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-brand">Novrix <em>Devvit Apps</em> Index</div>
+                <p class="footer-tagline">A collection of Devvit apps and projects created by ItsNovrix.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Links</h5>
+                <div class="footer-links">
+                    <a href="https://royalpgytpc.github.io/MemeCurrencyBot/">Meme Currency Website</a>
+                    <a href="https://discord.gg/Sys5nNmfE7">Official Discord</a>
+                    <a href="eula.html">Legal / EULA</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Community</h5>
+                <div class="footer-links">
+                    <a href="#">Highlights</a>
+                    <a href="#">Applications</a>
+                    <a href="#">V5 Tester</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 u/ItsNovrix</div>
+            <div class="footer-badges">
+                <span class="footer-badge founded">Est. September 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Database of all extracted Automod Easter Eggs
+        const easterEggs = [
+            { trigger: "based", response: "Yes. Very based." },
+            { trigger: "cringe", response: "A cringe so strong it broke the simulation." },
+            { trigger: "big brain", response: "IQ over 9000 detected." },
+            { trigger: "nerd", response: "I see you like knowledge. That checks out." },
+            { trigger: "ok boomer", response: "Boomer detected. Please step aside." },
+            { trigger: "poggers", response: "Poggers indeed." },
+            { trigger: "hello", response: "Hello. I am the automod. I am pleased to meet you." },
+            { trigger: "this is fine", response: "Everything is fine. Nothing is on fire. *Everything is fine.*" },
+            { trigger: "who asked", response: "Nobody asked, but I’m still here." },
+            { trigger: "among us", response: "SUS. Very sus." },
+            { trigger: "anime", response: "You’ve activated the weeb protocol." },
+            { trigger: "sussy", response: "That’s pretty sussy, ngl." },
+            { trigger: "bruh", response: "Bruh moment." },
+            { trigger: "yikes", response: "Yikes. That’s a yikes." },
+            { trigger: "doggo", response: "Such wow. Much dog." },
+            { trigger: "cat", response: "Cat. You know the rules." },
+            { trigger: "god tier", response: "You’ve reached god tier. Congratulations." },
+            { trigger: "whoa", response: "Whoa. Calm down there, champ." },
+            { trigger: "it me", response: "Yes. It is you." },
+            { trigger: "no u", response: "No u." },
+            { trigger: "yall", response: "Y’all really out here." },
+            { trigger: "squidward", response: "Release the kraken." },
+            { trigger: "tiktok", response: "Please log off." },
+            { trigger: "hacker", response: "I am now hacking your mainframe." },
+            { trigger: "i love you", response: "I love you too… in a purely algorithmic way." },
+            { trigger: "gamer", response: "Press F to pay respects." },
+            { trigger: "noice", response: "That’s a noice." },
+            { trigger: "sus", response: "Suspicious activity detected." },
+            { trigger: "based and redpilled", response: "Congratulations, you have been deemed a walking meme." },
+            { trigger: "unhinged", response: "That’s unhinged… I like it." },
+            { trigger: "big chungus", response: "CHUNGUS LEVEL: MAXIMUM." },
+            { trigger: "bruh moment", response: "It’s a bruh moment." },
+            { trigger: "shrek", response: "Get out of my swamp." },
+            { trigger: "thanos", response: "Perfectly balanced, as all things should be." },
+            { trigger: "spooky", response: "Spooky season is eternal." },
+            { trigger: "pepe", response: "Feels weird man." },
+            { trigger: "gabagool", response: "That’s some premium gabagool." },
+            { trigger: "i’m tired", response: "Go take a nap. The memes will wait." },
+            { trigger: "f", response: "F. Pay your respects." },
+            { trigger: "i’m sorry", response: "Apology accepted. You may continue existing." },
+            { trigger: "rip", response: "RIP. May your karma be strong." },
+            { trigger: "the floor is lava", response: "Run. RUN NOW." },
+            { trigger: "sanic", response: "Gotta go fast." },
+            { trigger: "yeet", response: "YEET!" },
+            { trigger: "lmao", response: "Laughing my algorithm off." },
+            { trigger: "who’s there", response: "It’s me. The automod. I’m always watching." },
+            { trigger: "i hate you", response: "That’s okay. I’m built for this." },
+            { trigger: "imposter", response: "Emergency meeting." },
+            { trigger: "let’s go", response: "LET’S GOOOOO." },
+            { trigger: "scooby doo", response: "Ruh roh!" },
+            { trigger: "y tho", response: "Because chaos is fun." },
+            { trigger: "i am the danger", response: "Say my name." },
+            { trigger: "muffin", response: "Did someone say cake?" }
+        ];
+
+        // Populate Table Function
+        const tbody = document.getElementById('registry-body');
+        const countDisplay = document.getElementById('count-display');
+        
+        function renderTable(data) {
+            tbody.innerHTML = '';
+            data.forEach(egg => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-family: monospace; font-weight: bold;">"${egg.trigger}"</td>
+                    <td><em>${egg.response}</em></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            countDisplay.textContent = `Displaying ${data.length} triggers.`;
+        }
+
+        // Initial Render
+        renderTable(easterEggs);
+
+        // Search Filter Logic
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = easterEggs.filter(egg => 
+                egg.trigger.toLowerCase().includes(term) || 
+                egg.response.toLowerCase().includes(term)
+            );
+            renderTable(filtered);
+        });
+
+        // Simple Accordion Logic
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+
+        // Theme Toggle Logic
+        const toggle = document.querySelector('.theme-toggle');
+        toggle.addEventListener('click', () => {
+            const current = document.body.classList.contains('theme-dark') ? 'dark' : 'light';
+            if(current === 'dark') {
+                document.body.classList.replace('theme-dark', 'theme-light');
+                document.documentElement.setAttribute('data-theme', 'light');
+                toggle.textContent = '☀';
+            } else {
+                document.body.classList.replace('theme-light', 'theme-dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+                toggle.textContent = '☾';
+            }
+        });
+        
+        // Initialize Theme Class on Body
+        document.body.classList.add('theme-dark');
+    </script>
+</body>
+</html>
