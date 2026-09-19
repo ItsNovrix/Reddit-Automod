@@ -1,0 +1,339 @@
+# ----------------------------------------------------------------#
+#                      GENERAL FILTERED RESPONSE                        #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: General Filtered Response
+#  Created By: BravoFive141
+#  Created On: 9/17/25
+#  Description: Respond to people querying why a filtered post or comment is not showing
+---
+subject+body (includes-word): ['not showing', 'not appearing', 'removed', 'showing up', 'deleted', 'removal', 'remove', 'not showing', 'automod', 'visible', 'filter', 'filtered']
+mod_action:
+    moderator_name: ["BravoFive141", "IM_NOT_BALD_YET", "comment-scout", "AutoModerator", "reddit"]
+    mod_action_type: ["removecomment", "removelink"]
+    action_within: "8 hours"
+    still_in_queue: true
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying why your recent [{{mod_action_target_kind}}]({{mod_action_target_permalink}}) from {{mod_action_timespan_to_now}} ago is not showing.
+
+    Your {{mod_action_target_kind}} may have been filtered by Reddit or our Automod filters. If this is the case, it is still in our queue for review. If your {{mod_action_target_kind}} was filtered, a mod will get to it ASAP and either approve or remove it. Thanks for your patience!
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                      GENERAL REMOVAL RESPONSE                      #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: General Removal Response
+#  Created By: BravoFive141
+#  Created On: 9/17/25
+#  Description: Respond to people querying why a post or comment was removed
+---
+subject+body (includes-word): ['not showing', 'not appearing', 'removed', 'showing up', 'deleted', 'removal', 'remove', 'not showing', 'botban', 'automod', 'visible', 'filter', 'filtered']
+mod_action:
+    moderator_name: ["BravoFive141", "IM_NOT_BALD_YET", "comment-scout", "AutoModerator", "reddit"]
+    mod_action_type: ["removecomment", "removelink"]
+    action_within: "8 hours"
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying why your recent [{{mod_action_target_kind}}]({{mod_action_target_permalink}}) from {{mod_action_timespan_to_now}} ago was removed.
+
+    Your {{mod_action_target_kind}} was removed due to violating our community rules. The most common reasons for removal in our subreddit are: 
+
+    - Content being flagged as AI-generated&#10;  
+
+    - Stolen content being passed off as OC&#10;  
+
+    - Not providing a source to your content&#10;  
+
+    - Not responding to the Comment Scout bot in time&#10;  
+
+    - Failing to respond to the Comment Scout bot&#10;  
+
+    - Formatting your response to the Comment Scout bot incorrectly&#10;  
+
+    - Being marked as a bot by the Bot Bouncer bot
+
+    These are the most common reasons for content being removed, but they are not the only reasons, and they may not apply to your case. More information can be found in the comment that was left on your {{mod_action_target_kind}}. If you believe that your {{mod_action_target_kind}} was removed in error, feel free to let us know why you think your {{mod_action_target_kind}} should be restored and a mod will review your request ASAP. Thanks! 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                            AI FLAG RESPONSE                                    #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: AI Flag Response
+#  Created By: BravoFive141
+#  Created On: 9/21/25
+#  Description: Respond to people querying about content flagged as AI
+---
+subject+body (includes-word): ['flagged as AI', 'marked AI', labeled AI', 'removed as AI', 'removed for AI', 'not AI', 'AI']
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying about your post being flagged as AI-generated content. 
+
+    r/{{subreddit}} does not tolerate AI-generated content, and as such, uses a variety of bots to detect, remove, and prevent the spread of AI-generated content. 
+
+    While we aim to only remove actual AI-generated content, no bot is perfect, and sometimes authentic content can get flagged by mistake. If your content is authentic and was mistakenly flagged as AI-generated, please follow the steps below to have it reinstated:
+
+    - Take a screenshot showing the metadata of any content flagged as AI&#10;  
+
+    - Upload your screenshot(s) to [imgbb.com](https://www.imgbb.com) and set the auto-delete to 2 weeks&#10;  
+
+    - Copy the viewer link(s)&#10;  
+
+    - Reply to this modmail with the link(s) so that we can verify the content is authentic
+
+    To learn more about the bots that our community uses and how they work, please review the **Moderation and Safety** section of our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                    ATTRIBUTION REMOVAL RESPONSE                 #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Attribution Removal Response
+#  Created By: BravoFive141
+#  Created On: 9/26/25
+#  Description: Respond to queries regarding attribution removals
+---
+subject+body (includes-word): ['attribution', 'removed for attribution']
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying about content attribution. 
+
+    Attribution is required on all image posts in r/{{subreddit}}. Our Comment Scout bot handles attribution, so if you're making a post or have already made a post, please be sure to carefully review the instructions that Comment Scout provides to ensure that you properly attribute your post. 
+
+    If you're reaching out because you've had a post removed recently for violation of our rule regarding attribution, the most likely causes are:
+
+    - Not following the instructions provided by Comment Scout&#10;  
+
+    - Not responding to Comment Scout&#10;  
+
+    - Stolen content being passed off as OC
+
+    To learn more about the bots that our community uses and how they work, or to review the rules for our community, please see our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                          BAN APPEAL - BANNED                              #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Ban Appeal Response - Banned
+#  Created By: BravoFive141
+#  Created On: 9/17/25
+#  Description: Respond to people querying bans
+---
+subject+body (includes-word): ['ban appeal', 'why am i banned', 'why did i get banned', 'why i got banned', 'why banned', 'get banned', 'got banned', 'ban', 'banned', 'temporarily banned', 'permanently banned']
+author:
+    is_banned: true
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying why you've been banned from r/{{subreddit}}. If you've recently made a post or comment in r/{{subreddit}}, please review your post for any removal reasons that may have been added. You can also review the ban message that accompanied your ban to gather additional details on the reason for your ban. The most common reasons for being banned from r/{{subreddit}} are: 
+
+    - Passing off AI-generated as OC
+    - Stolen content being passed off as OC
+    - Multiple instances of not providing a source to your content
+
+    If you believe that you were banned in error, feel free to let us know why you believe that your ban should be lifted, and a mod will review your request ASAP. Thanks for your patience!
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                       BAN APPEAL - NOT BANNED                         #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Ban Appeal Response - Not Banned
+#  Created By: BravoFive141
+#  Created On: 9/17/25
+#  Description: Respond to people querying bans
+---
+subject+body (includes-word): ['ban appeal', 'why am i banned', 'why did i get banned', 'why i got banned', 'why banned', 'get banned', 'got banned', 'ban', 'banned', 'temporarily banned', 'permanently banned']
+author:
+    is_banned: false
+reply: |
+    Hi /u/{{author}},
+
+    It looks like you're trying to appeal a ban from {{subreddit}}. You don't appear to be banned at the current time. If you have any other questions or concerns, feel free to let us know! 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                         SHADOWBAN RESPONSE                             #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Shadowban Response
+#  Created By: BravoFive141
+#  Created On: 9/17/25
+#  Description: Respond to people querying shadow bans
+---
+subject+body (includes-word): ['hidden', 'shadow ban', 'shadowban', 'shadow banned', 'shadowbanned', 'invisible']
+author:
+    is_shadowbanned: true
+reply: |
+    Hi /u/{{author}},
+
+    Thanks for writing in. Unfortunately, your account has been shadowbanned by Reddit admins. This is not something we have any control over.
+
+    Until this situation is resolved, your posts and comments will be invisible. You can [appeal your shadowban](https://reddit.com/appeal) or see /r/shadowban for more information about shadowbans.
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                            OC CONTENT RESPONSE                          #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: OC Content Response
+#  Created By: BravoFive141
+#  Created On: 9/21/25
+#  Description: Respond to people querying about OC content
+---
+subject+body (includes-word): ['content is OC', 'content is original', 'I am the creator', 'I am the original creator']
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying about your post being OC. 
+
+    The r/{{subreddit}} mod team has not claimed that your content is not OC. We use a variety of bots to prevent the spread of AI and stolen content, ensuring that the subreddit stays authentic and fair. Many people, such as yourself, seem to be confused by this. None of our bots are accusing anybody of not posting OC content, they're simply helping to verify whether or not content is OC. 
+
+    To learn more about the bots that our community uses and how they work, please review the **Moderation and Safety** section of our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                             AI CONTENT RESPONSE                           #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: AI Content Response
+#  Created By: BravoFive141
+#  Created On: 10/17/25
+#  Description: Respond to people stating that their content is not AI
+---
+subject+body (includes-word): ['content is not AI', 'not AI', 'not AI generated', 'not AI-generated']
+reply: |
+    Hi {{author}},
+
+    It sounds like you're querying about your post being AI-generated content. 
+
+    The r/{{subreddit}} mod team has not claimed that your content is not OC. We use a variety of bots to prevent the spread of AI and stolen content, ensuring that the subreddit stays authentic and fair. Many people, such as yourself, seem to be confused by this. None of our bots are accusing anybody of not posting OC content, they're simply helping to verify whether or not content is OC. 
+
+    To learn more about the bots that our community uses and how they work, please review the **Moderation and Safety** section of our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                           POST REVIEW RESPONSE                           #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Restore Post Request
+#  Created By: BravoFive141
+#  Created On: 10/17/25
+#  Description: Respond to people requesting that their post be restored after removals
+---
+subject+body (includes-word): ['please review', 'please review post', 'please review my post', 'please review my post', 'please review my removed post', 'review my post', 'review my removed post', 'review post', 'restore', 'restore post', 'restore my post', 'now replied', 'restoration', 'post restoration', 'please restore', 'plz restore', 'reinstate', 'reinstated', 'responded', re-responded']
+mod_action:
+    moderator_name: ["BravoFive141", "IM_NOT_BALD_YET", "comment-scout", "AutoModerator", "reddit"]
+    mod_action_type: ["removecomment", "removelink"]
+    action_within: "8 hours"
+reply: |
+    Hi {{author}},
+
+    It sounds like you're requesting to have your [{{mod_action_target_kind}}]({{mod_action_target_permalink}}) from {{mod_action_timespan_to_now}} ago reviewed/restored. 
+
+    If you haven't already, please provide details about why your post was removed. If your post removal was related to attribution or responding to the Comment Scout bot comment on your post, please make sure to review the instructions found in the Comment Scout bot comment on your post and ensure that you have properly followed those instructions. Many posts are removed due to users failing to respond to this bot or failing to format their responses to this bot properly because they did not read the instructions provided by the bot. It is your responsibility to read the instructions provided by the bot and respond properly. 
+
+    If your post removal was related to attribution or responding to the Comment Scout bot comment on your post and you've corrected the issues with your post, let us know that you've corrected the issue and we'll review your post. If your post removal was not related to attribution or responding to the Comment Scout bot comment on your post and you believe that your post was removed in error, feel free to let us know why you think your post should be restored and a mod will review your request ASAP. Thanks! 
+
+    To learn more about the bots that our community uses and how they work, please review the **Moderation and Safety** section of our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                   RESPONDED IN TIME RESPONSE                       #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Responded In Time Response
+#  Created By: BravoFive141
+#  Created On: 10/17/25
+#  Description: Respond to people stating they responded in time to Comment Scout
+---
+subject+body (includes-word): ['responded in time', 'responded within time']
+mod_action:
+    moderator_name: ["BravoFive141", "IM_NOT_BALD_YET", "comment-scout", "AutoModerator", "reddit"]
+    mod_action_type: ["removecomment", "removelink"]
+    action_within: "8 hours"
+reply: |
+    Hi {{author}},
+
+    It sounds like you're reaching out regarding your [{{mod_action_target_kind}}]({{mod_action_target_permalink}}) that was removed {{mod_action_timespan_to_now}} ago. 
+
+    While you may have responded to our bot within the specified time frame, your response comment still failed to meet the requirements set forth by our bot. The most comment reasons for this are: 
+
+    - Formatting your response to the bot incorrectly&#10;  
+
+    - Responding with a new top-level comment rather than replying directly to the bot comment&#10;  
+
+    - Misspelling the details of the device that was used to capture your content&#10;  
+
+    - Listing a device as the device used to capture your content that our bot has not been programmed to look for
+
+    Please ensure that your comment is formatted properly, is free from typos in the device details, and that you replied directly to the bot comment. Comments that are not formatted properly or are new top-level comments are will not be accepted and your post will remain removed. 
+
+    As a reminder, comments in response to Comment Scout must be formatted as follows: 
+
+    - If your post is OC, **state that you are the original creator** of the content **and** include details about **how the content was captured** (e.g., device or camera like "iPhone 15", "Canon Rebel T6", etc.).&#10;  
+
+    - If your post is **not** OC, provide a link to where you obtained the content or who gave you permission to share it.&#10;  
+
+    - Comments **must** be a reply directly to the bot comment, **not** a new top-level comment
+
+    Once you've ensured that your comment is formatted properly, is free from typos in the device details, and that you replied directly to the bot comment rather than posting a new top-level comment, feel free to let us know with a follow-up message and we'll review your post. If your post was removed because the device you used to capture your content is not currently programmed into our bot, rest assured that we will restore your post and will update our bot to include your device type as soon as possible. 
+
+    To learn more about the bots that our community uses and how they work, please review the **Moderation and Safety** section of our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
+# ----------------------------------------------------------------#
+#                      UPDATED SOURCE RESPONSE                        #
+# ----------------------------------------------------------------#
+#
+#  Rule Name: Updated Source Response
+#  Created By: BravoFive141
+#  Created On: 10/17/25
+#  Description: Respond to people updating the source on their post after removal for not sourcing
+---
+subject+body (includes-word): ['updated source', 'updated my source', 'updated it', updated', 'added source', 'source added', 'source updated', 'responded with source', 'responded with my source', 'replied with source', 'replied with my source', 'replied to the original comment', 'replied to the comment', 'replied to comment', 'sent source', 'sent the source', 'sent my source', 'attached source', 'attached the source', 'attached my source']
+mod_action:
+    moderator_name: ["BravoFive141", "IM_NOT_BALD_YET", "comment-scout", "AutoModerator", "reddit"]
+    mod_action_type: ["removecomment", "removelink"]
+    action_within: "8 hours"
+reply: |
+    Hi {{author}},
+
+    It sounds like you're reaching out to let the mod team know that you've updated the source for your [{{mod_action_target_kind}}]({{mod_action_target_permalink}}) from {{mod_action_timespan_to_now}} ago. 
+
+    Thanks for letting us know that you've updated your source! The mods will review your post shortly and approve or deny it. In the future, please take note of the time limit that is given to all posts to provide a source. Users have **30 minutes** from the time of posting to reply to the bot comment to ensure that their post remains visible. To learn more about the bots that our community uses and how they work, please review the **Moderation and Safety** section of our [subreddit wiki](https://www.reddit.com/r/sun/wiki/index/). 
+
+    If you have any further questions or if this did not address your concerns, please let us know and a mod will get back with you shortly. 
+
+    — The r/{{subreddit}} Mod Team
+---
