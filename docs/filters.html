@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        /* Base Variables & Theming (Identical to your index page) */
+        /* Base Variables & Theming */
         :root {
             --bg: #0f1115;
             --surface: #1a1d24;
@@ -334,6 +334,25 @@
 
     <main class="section" style="padding-top: 2rem;">
         <div class="container">
+            
+            <!-- CODE CARD: AGE FILTER -->
+            <div class="code-card" id="age-filter">
+                <div class="code-header">
+                    <h2 class="code-title">Mass Edit Filter</h2>
+                    <p class="code-desc">Automatically removes content that has been edited using mass edit tools.</p>
+                </div>
+                <div class="code-body">
+                    <button class="copy-btn">Copy</button>
+<pre><code>---
+#  Automatically remove mass edited content
+    type: any
+    body+url(includes): ['redact.dev', 'codepen.io/j0be', 'github.com/j0be', 'codepen.io/pkolyvas', 'the-federation.info']
+    is_edited: true
+    action: remove
+    action_reason: Mass Edited Content | [{{match}}]
+---</code></pre>
+                </div>
+            </div>
 
             <!-- CODE CARD: AGE FILTER -->
             <div class="code-card" id="age-filter">
@@ -385,10 +404,18 @@ action_reason: "Low Karma User (Review Required)"
                 <div class="code-body">
                     <button class="copy-btn">Copy</button>
 <pre><code>---
-# Filter severe profanity
-title+body (regex, includes): ['slur1', 'slur2', 'bitch', 'cunt']
-action: filter
-action_reason: "Profanity Detected: [{{match}}]"
+# Filter offensive terms
+    type: any
+    title+body (includes): ["African IQ", "all lives matter", "ameri(turd|cunt|[phf]+[eoia]+g+([ieao]+[tryie]+)?)[sz]*", "anti(\\s|-)?white", "ape\\W?fricans?", "bat\\W?soup", "black IQ", "blacks", "blue lives matter", "bundle of (billets|sticks|wood)", "camel\\W?fuc?kers?", "chimp(ire)?s?", "china\\W?m[ae]ns?", "chinese virus", "china boy", "ch[io]n[gk]s?", "coal burner", "coalie", "coons?(y|i?e?s?|er)?", "coontown", "crackers?", "dark(e?ys?|ies?)", "(diaper|dot|rag|towel)\\W?heads?", "(fuck|fuk) (black|white|brown|dark|african) people", "goat\\W?fuckers?", "groids?", "happy\\W?merchants?", "high\\s?yellows?", "jungle\\W?bunn?(ie|y)?s?", "kiggers", "kkk", "klan", "mignorants?", "mongoloids?", "moon\\W?crickets?", "(shit|mud)\\W?(child(ren)?|skin)s?", "muslimes?", "mu(zz|ss)ie(s)?", "negroe?s?", "nibba", "n[aeiouy]gg?[eu]r", "nig\\W?town", "nuffin", "n-word", "pakis?", "pike?(y|ie)?s?", "(p[o0]rch|sand)\\s?nigg?(er|r|a|let)?s?", "(p[0o]rch|sand)\\W?m[0o]nk(ey|ie|y)s?", "put[o0] gringo", "r/hateblackpeople", "religion of (pieces|piss)", "soy\\W?boys?", "spear\\s?chuckers?", "spi(c|k|ck|g|gott?(ie|y))s?", "still racist", "tarbab(y|ie)s?", "white genocide", "white lives matter", "white power", "whiterights?", "beaner", "camel jockey", "ching chong", "coon", "coonass", "coon-ass", "dyke", "fudgepacker", "gook", "homo", "honky", "jigaboo", "jiggaboo", "kike", "kyke", "kraut", "niglet", "nignog", "nig-nog", "nigger", "retard", "retarded", "sand nigger", "sheeny", "shylock", "slut", "twink", "wetback", "wet-back", "whore", "zipperhead"]
+    ~title+body+url: ["neck", "nice", "nick", "nic", "neg", "auckland", "aukland"]
+    action: filter
+    action_reason: Possible offensive term detected: | [{{match}}]
+---
+
+    title+body (regex): ["\b(sand\\s?)?[nŃ][ei!1*|lîį!][bcgkq69ß&]+([ageru34@*ë]+[rsz]*)?\b", "eat (cat|dog|bat)s?", "japs?", "kkk", "klan", "n[8ïī!jìîí¡i][69gkq][69gkq]?[a@q]", "n[8ïī!jìîí¡i][69gkq][69gkq]?[e3]?(let|r|town|Я)?[5sz]?", "n[1!i]gs?-?", "n[i!j1e]+gg?(rs?|ett?e?s?|lets?|ress?e?s?|r[a0oe]s?|[ie@ao0!]rs?|r[o0]ids?|ab[o0]s?|erest)", "n[i1][gkq69][gkq69]?([e3]r)?(n[o0]g|l[e3]t|r[e3][s5][s5])?([e3]?[s5])?", "n ?word", "nigg?(er|r|r?a|lett?)s?z?", "nigg?[aeoi]s?", "nigg?s?", "88", "aryan", "f[üu][3e]?hrer", "gass? the", "hail h", "heil", "hh", "hitler", "holo\\W?hoaxe?s?", "juden?", "jws", "k[iy]kes?", "mein kr?am[phf]", "nazis?", "schmutz", "shekel", "sieg", "vult", "zyklon", "(2|two)\\s?genders", "abomination", "antifas?", "average IQ", "beetusbehemoths?", "boot\\W?lips?", "child sex", "christ\\W?killers?", "cock\\W?suckers?", "cunts?y?", "d(i|y)ke(s)?", "f[a@]g(g?[eo0i]t|s)?", "(f|ph)[a@]?[g69q][g69q]?([e0aio]t?)?t?(ed|ie|y)?s?t?", "faggish", "faggit", "fat\\W?(asse?|fuck)?s?", "fatt(ie|y)s?", "femi\\W?nazis?", "fuck\\W?boys?", "gae", "ghey", "(re|fuck|jerk|lib|republi)?tard(s|ed(ly)?)?", "lady\\W?boys?", "lesbos?", "mental(ly)?\\sill(ness)?", "mentally handicapped", "midget", "obeasts?", "pedosexual", "queer\\Wbags?", "she[- _]?male[sz]*", "shit\\W?(bag|dick|lord)s?", "siss(y|ie)", "SLGB[TS]S?", "sodomite", "spastic(s|ated)?", "spic", "spick", "superphobi?(c|a|e)s?", "super ?(strai(gh)?t|gay|lesbian|bi|(bi)?sexual)s?", "terf", "tran(?!s)n?(y|ie)?[sz]?\\b", "(you|you're|your) (are|look)? (fat|obese)", "You will never be a (real )?(woman|man)", "ywnba(r)?(m|w)"]
+    ~title+body+url: ["neck", "nice", "nick", "nic", "neg", "auckland", "aukland"]
+    action: filter
+    action_reason: Possible offensive term detected | [{{match}}]
 ---</code></pre>
                 </div>
             </div>
