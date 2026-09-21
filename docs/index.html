@@ -259,6 +259,13 @@
 
         .faq-inner em { color: var(--tx1); }
 
+        .faq-inner ul {
+            margin-left: 1.25rem;
+        }
+        .faq-inner li {
+            margin-bottom: 0.25rem;
+        }
+
         /* Card & Table */
         .card {
             background: var(--surface);
@@ -534,6 +541,7 @@
             <h2 class="serif-heading" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Featured Configs</h2>
             
             <div class="faq-cols">
+                <!-- Left Column -->
                 <div class="stagger in">
                     <div class="faq-item">
                         <button class="faq-btn">Filters<span class="faq-chev">▼</span></button>
@@ -547,70 +555,73 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-btn">AutoResponses<span class="faq-chev">▼</span></button>
-                        <div class="faq-body">
-                            <div class="faq-inner">
-                                <ul>
-                                    <li>Age Filter</li>
-                                    <li>Karma Filter</li>
-                                    <li>Profanity Filter</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-            <div class="faq-item">
-                        <button class="faq-btn">Filters<span class="faq-chev">▼</span></button>
-                        <div class="faq-body">
-                            <div class="faq-inner">
-                                <ul>
-                                    <li>Age Filter</li>
-                                    <li>Karma Filter</li>
-                                    <li>Profanity Filter</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-            <div class="faq-item">
-                        <button class="faq-btn">Filters<span class="faq-chev">▼</span></button>
-                        <div class="faq-body">
-                            <div class="faq-inner">
-                                <ul>
-                                    <li>Age Filter</li>
-                                    <li>Karma Filter</li>
-                                    <li>Profanity Filter</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="faq-item">
-                        <button class="faq-btn">"cringe"<span class="faq-chev">▼</span></button>
-                        <div class="faq-body"><div class="faq-inner">Response: <em>"A cringe so strong it broke the simulation."</em></div></div>
+                        <button class="faq-btn">AutoResponses<span class="faq-chev">▼</span></button>
+                        <div class="faq-body">
+                            <div class="faq-inner">
+                                <ul>
+                                    <li>Welcome Message</li>
+                                    <li>Megathread Redirect</li>
+                                    <li>Rule Violation Warning</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-btn">Removals<span class="faq-chev">▼</span></button>
+                        <div class="faq-body">
+                            <div class="faq-inner">
+                                <ul>
+                                    <li>Blacklisted Domains</li>
+                                    <li>Spam Keywords</li>
+                                    <li>Crowd Control Triggers</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Right Column -->
                 <div class="stagger in">
                     <div class="faq-item">
-                        <button class="faq-btn">"Valentine"<span class="faq-chev">▼</span></button>
-                        <div class="faq-body"><div class="faq-inner">Response: <em>"No bitches. Try going outside or taking a shower."</em></div></div>
+                        <button class="faq-btn">Scheduled Posts<span class="faq-chev">▼</span></button>
+                        <div class="faq-body">
+                            <div class="faq-inner">
+                                <ul>
+                                    <li>Daily Discussion Thread</li>
+                                    <li>Weekly Showcase</li>
+                                    <li>Monthly Feedback</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="faq-item">
-                        <button class="faq-btn">"Technoblade"<span class="faq-chev">▼</span></button>
-                        <div class="faq-body"><div class="faq-inner">Response: <em>"...never dies."</em></div></div>
+                        <button class="faq-btn">Easter Eggs<span class="faq-chev">▼</span></button>
+                        <div class="faq-body">
+                            <div class="faq-inner">
+                                <ul>
+                                    <li>"Cringe" Response</li>
+                                    <li>"Valentine" Response</li>
+                                    <li>"Technoblade" Response</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="faq-item">
-                        <button class="faq-btn">"Sybau"<span class="faq-chev">▼</span></button>
-                        <div class="faq-body"><div class="faq-inner">Response: <em>"Watch your tongue! I hate you, cause I'm a bad bot."</em> (Removes comment)</div></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-btn">"Big Chungus"<span class="faq-chev">▼</span></button>
-                        <div class="faq-body"><div class="faq-inner">Response: <em>"CHUNGUS LEVEL: MAXIMUM."</em></div></div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-btn">"Hacker"<span class="faq-chev">▼</span></button>
-                        <div class="faq-body"><div class="faq-inner">Response: <em>"I am now hacking your mainframe."</em></div></div>
+                        <button class="faq-btn">Utility<span class="faq-chev">▼</span></button>
+                        <div class="faq-body">
+                            <div class="faq-inner">
+                                <ul>
+                                    <li>Flair Enforcer</li>
+                                    <li>Title Tag Requirer</li>
+                                    <li>Report Threshold Alert</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
