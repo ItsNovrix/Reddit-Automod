@@ -1,1 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoResponses | Automod Config Database</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        /* Base Variables & Theming */
+        :root {
+            --bg: #0f1115;
+            --surface: #1a1d24;
+            --surface-hover: #242832;
+            --tx1: #f3f4f6;
+            --tx2: #9ca3af;
+            --orange: #ef4444; 
+            --orange-hover: #dc2626;
+            --line: #2d313a;
+            --radius: 8px;
+            --font-sans: 'DM Sans', sans-serif;
+            --font-serif: 'Instrument Serif', serif;
+        }
 
+        [data-theme="light"] {
+            --bg: #f9fafb;
+            --surface: #ffffff;
+            --surface-hover: #f3f4f6;
+            --tx1: #111827;
+            --tx2: #4b5563;
+            --orange: #ef4444;
+            --line: #e5e7eb;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--tx1);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        .nav {
+            position: sticky;
+            top: 0;
+            background: rgba(var(--bg), 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .nav-logo-mark {
+            color: var(--orange);
+            font-size: 1.5rem;
+        }
+
+        .nav-center {
+            display: none;
+            gap: 2rem;
+        }
+
+        @media(min-width: 768px) { .nav-center { display: flex; } }
+
+        .nav-item {
+            color: var(--tx2);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-item:hover, .nav-item[href="#"] {
+            color: var(--tx1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--tx1);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--surface);
+        }
+
+        .nav-btn.primary {
+            background-color: var(--orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .nav-btn.primary:hover {
+            background-color: var(--orange-hover);
+        }
+
+        /* Header Section */
+        .section { padding: 5rem 0; }
+        
+        .grid-bg {
+            background-image: linear-gradient(var(--line) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center top;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 99px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--tx2);
+            margin-bottom: 1.5rem;
+        }
+        
+        .badge-pill a { transition: color 0.2s; }
+        .badge-pill a:hover { color: var(--tx1); }
+
+        .heading {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .heading em {
+            color: var(--orange);
+            font-style: italic;
+        }
+
+        .subhead {
+            font-size: 1.125rem;
+            color: var(--tx2);
+            max-width: 600px;
+            margin-bottom: 1rem;
+        }
+
+        /* Code Card Styles */
+        .code-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            margin-bottom: 3rem;
+            overflow: hidden;
+            scroll-margin-top: 100px;
+        }
+
+        .code-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--line);
+            background: var(--surface-hover);
+        }
+
+        .code-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--tx1);
+            margin-bottom: 0.5rem;
+        }
+
+        .code-desc {
+            color: var(--tx2);
+            font-size: 1rem;
+        }
+
+        .code-body {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        pre {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            color: var(--tx1);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 2.25rem;
+            right: 2.5rem;
+            background: var(--surface);
+            color: var(--tx2);
+            border: 1px solid var(--line);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--orange);
+            color: white;
+            border-color: var(--orange);
+        }
+
+        .copy-btn.copied {
+            background: #22c997;
+            color: white;
+            border-color: #22c997;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--line);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        @media(min-width: 768px) { .footer-inner { grid-template-columns: 2fr 1fr 1fr; } }
+
+        .footer-brand {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-brand em { color: var(--orange); font-style: normal; }
+        .footer-tagline { color: var(--tx2); font-size: 0.875rem; }
+        .footer-col h5 { margin-bottom: 1rem; font-size: 1rem; }
+        .footer-links { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-links a { color: var(--tx2); font-size: 0.875rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--tx1); }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem 1.5rem 0;
+            border-top: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--tx2);
+        }
+
+        .footer-badges { display: flex; gap: 1rem; }
+        .footer-badge { padding: 0.25rem 0.5rem; border: 1px solid var(--line); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-mark">☭</div>
+                ItsNovrix
+            </a>
+            <div class="nav-center">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="giveawayform.html" class="nav-item">GitHub</a>
+                <a href="#" class="nav-item">Contact</a>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle">☾</button>
+                <a href="https://www.reddit.com/r/NovrixApps" class="nav-btn primary">Join the Subreddit</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="section grid-bg" style="padding-bottom: 2rem;">
+        <div class="container" style="text-align: center;">
+            <span class="badge-pill">
+                <a href="index.html">← Back to Database</a>
+            </span>
+            <h1 class="heading">Subreddit <em>AutoResponses</em></h1>
+            <p class="subhead" style="margin-left: auto; margin-right: auto;">
+                Automatically reply to submissions, welcome new users, and provide helpful resources based on triggers and flairs.
+            </p>
+        </div>
+    </header>
+
+    <main class="section" style="padding-top: 2rem;">
+        <div class="container">
+
+            <!-- CODE CARD: STICKY WELCOME COMMENT -->
+            <div class="code-card" id="sticky-welcome">
+                <div class="code-header">
+                    <h2 class="code-title">Sticky Welcome on All Posts</h2>
+                    <p class="code-desc">Automatically leaves a pinned (stickied) comment on every new submission to remind users of subreddit rules or important links.</p>
+                </div>
+                <div class="code-body">
+                    <button class="copy-btn">Copy</button>
+<pre><code>---
+# Sticky comment on all new submissions
+type: submission
+comment: |
+    Welcome to /r/{{subreddit}}! Please remember to review our community rules before participating. 
+
+    If this post violates our rules, please use the report button so our moderator team can review it.
+comment_stickied: true
+---</code></pre>
+                </div>
+            </div>
+
+            <!-- CODE CARD: FLAIR-BASED COMMENT -->
+            <div class="code-card" id="flair-response">
+                <div class="code-header">
+                    <h2 class="code-title">Reply Based on Post Flair</h2>
+                    <p class="code-desc">Triggers an automatic, helpful comment whenever a user submits a post using a specific flair (e.g., "Help" or "Question").</p>
+                </div>
+                <div class="code-body">
+                    <button class="copy-btn">Copy</button>
+<pre><code>---
+# Auto-reply to a specific post flair
+type: submission
+flair_text (includes): ["Question", "Help"]
+comment: |
+    Hi /u/{{author}}! It looks like you're asking a question. 
+    
+    Before waiting for an answer, please check our [FAQ Wiki Page](https://reddit.com/r/{{subreddit}}/wiki/faq) to see if this has been answered before!
+---</code></pre>
+                </div>
+            </div>
+
+            <!-- CODE CARD: KEYWORD FAQ -->
+            <div class="code-card" id="keyword-faq">
+                <div class="code-header">
+                    <h2 class="code-title">Keyword-Triggered FAQ</h2>
+                    <p class="code-desc">Scans the title for specific keywords and drops a helpful link. Great for pointing users to external resources like a Discord server.</p>
+                </div>
+                <div class="code-body">
+                    <button class="copy-btn">Copy</button>
+<pre><code>---
+# Reply to common keywords in titles
+type: submission
+title (includes): ["discord", "chat", "server"]
+comment: |
+    Looking for our official Discord server? You can join the community here: https://discord.gg/your-invite-link
+---</code></pre>
+                </div>
+            </div>
+
+            <!-- CODE CARD: MEGATHREAD REDIRECT -->
+            <div class="code-card" id="megathread-redirect">
+                <div class="code-header">
+                    <h2 class="code-title">Megathread Redirect (Remove & Reply)</h2>
+                    <p class="code-desc">Automatically removes a post regarding an over-discussed topic, leaving a locked comment redirecting the user to a central megathread.</p>
+                </div>
+                <div class="code-body">
+                    <button class="copy-btn">Copy</button>
+<pre><code>---
+# Remove common topics and redirect to a Megathread
+type: submission
+title+body (includes): ["overused topic", "common event"]
+action: remove
+action_reason: "Redirect to Megathread"
+comment: |
+    Hi /u/{{author}}, your post has been automatically removed. 
+    
+    This topic is currently being heavily discussed, so we are consolidating all conversation into our dedicated Megathread to prevent clutter.
+    
+    Please redirect your comments here: [Link to Megathread]
+comment_locked: true
+---</code></pre>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <div class="footer-brand">Reddit <em>Automod Config</em> Database</div>
+                <p class="footer-tagline">A collection of Devvit apps and projects created by ItsNovrix.</p>
+            </div>
+            <div class="footer-col">
+                <h5>Links</h5>
+                <div class="footer-links">
+                    <a href="https://royalpgytpc.github.io/MemeCurrencyBot/">Meme Currency Website</a>
+                    <a href="https://discord.gg/Sys5nNmfE7">Official Discord</a>
+                    <a href="eula.html">Legal / EULA</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Community</h5>
+                <div class="footer-links">
+                    <a href="#">Highlights</a>
+                    <a href="#">Applications</a>
+                    <a href="#">V5 Tester</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copy">© 2026 u/ItsNovrix</div>
+            <div class="footer-badges">
+                <span class="footer-badge founded">Est. September 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Logic
+        const toggle = document.querySelector('.theme-toggle');
+        toggle.addEventListener('click', () => {
+            const current = document.body.classList.contains('theme-dark') ? 'dark' : 'light';
+            if(current === 'dark') {
+                document.body.classList.replace('theme-dark', 'theme-light');
+                document.documentElement.setAttribute('data-theme', 'light');
+                toggle.textContent = '☀';
+            } else {
+                document.body.classList.replace('theme-light', 'theme-dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+                toggle.textContent = '☾';
+            }
+        });
+        document.body.classList.add('theme-dark');
+
+        // Copy to Clipboard Logic
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.parentElement.querySelector('code');
+                const textToCopy = codeBlock.innerText;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
