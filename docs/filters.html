@@ -419,6 +419,24 @@ action_reason: "Low Karma User (Review Required)"
 ---</code></pre>
                 </div>
             </div>
+            
+            <!-- CODE CARD: POLITICAL FILTER -->
+            <div class="code-card" id="political-filter">
+                <div class="code-header">
+                    <h2 class="code-title">Sexual Harassment Filter</h2>
+                    <p class="code-desc">Automatically filters likely sexual harassment.</p>
+                </div>
+                <div class="code-body">
+                    <button class="copy-btn">Copy</button>
+<pre><code>---
+# Filter sexual harassment
+    type: any
+    title+body (regex): ["3 ?(sum|some)", "anals?", "are\\W?you\\W?single", "ass", "back\\W?door\\W?sluts?", "ball torture", "bea?stiality", "(blow|hand)\\s*jobs?", "boners?", "Brazzers", "butt\\W?(munch|holes?|hurt|sex)", "butt\\W?plugs?", "[ck]+[ou]+m+e?.?dump(ster)?[sz]*", "cumm?\\W?(s|ing|ies|ed|shots?)?", "deez nuts", "dicks?", "dick\\W?girls?", "down bad", "ejeculate(s|d)?", "erections?", "fapp?(s|ing|er|ed)", "fist(ing|ed)?s?", "flesh\\W?lights?", "fu(ck|xx|cx|xk)able", "glory\\W?holes?", "hoes?", "horny", "i'?d smash", "jack(ing|in')? off", "jail\\W?bait", "jerk(s|ing)?\\W?offs?", "legal teens?", "lingerie", "masturbat", "mast[ue]rbat(es?|ing|ion)?", "[mdg]ilfs?y?", "necrophili?ac?s?", "no(-| )?nut(-| )?november", "NNN", "nudes?", "p[0o*]rno?s?", "pornhub", "pornography", "pussy", "rape(s|d|y)?", "rapists?", "ray\\W?ping", "rub(s|bing)?\\W?(you|one|1)?\\W?off", "semen", "three(some|sum)", "tidd(y|ie)?s?", "t[1i]tt?(a|y|ie)?s?", "unzip", "wank(er|ing)?s?", "whores?d?", "zoophil(e|ia)"]
+    action: filter
+    action_reason: Possible sexual harassment: [{{match}}]
+---</code></pre>
+                </div>
+            </div>
 
             <!-- CODE CARD: POLITICAL FILTER -->
             <div class="code-card" id="political-filter">
